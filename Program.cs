@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using TheRead_BlogPost_API.Data;
+using TheRead_BlogPost_API.Repositories.Implementation;
+using TheRead_BlogPost_API.Repositories.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +19,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 
 });
+
+//add the repository to the DI container
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 
 
