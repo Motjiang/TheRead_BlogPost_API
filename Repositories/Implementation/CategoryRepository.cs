@@ -35,6 +35,17 @@ namespace TheRead_BlogPost_API.Repositories.Implementation
             return await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
         }
 
+        public async Task<Category?> UpdateCategoryAsync(Category category)
+        {
+            var existingCategory =  await _context.Categories.FirstOrDefaultAsync(c => c.Id == category.Id);
 
+            if(existingCategory != null)
+            {
+                _context.Entry(existingCategory).CurrentValues.SetValues(category);
+                await _context.SaveChangesAsync();
+                return category;
+            }
+            return null;
+        }
     }
 }

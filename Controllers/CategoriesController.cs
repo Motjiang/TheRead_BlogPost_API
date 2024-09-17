@@ -82,5 +82,18 @@ namespace TheRead_BlogPost_API.Controllers
 
             return Ok(response);
         }
+
+        // Put: api/Categories{id}
+        [HttpPut]
+        [Route("{id} : Guid")]
+        public async Task<IActionResult> UpdateCategory([FromRoute] Guid id, UpdateCategoryRequestDto request)
+        {
+            var category = new Category
+            {
+                Id = id,
+                Name = request.Name,
+                UrlHandle = request.UrlHandle
+            };
+        }
     }
 }
