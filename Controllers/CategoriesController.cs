@@ -94,6 +94,25 @@ namespace TheRead_BlogPost_API.Controllers
                 Name = request.Name,
                 UrlHandle = request.UrlHandle
             };
+
+            category = await _categoryRepository.UpdateCategoryAsync(category);
+
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            // Convert domain model to DTO
+
+            var response = new CategoryDto
+            {
+                Id = category.Id,
+                Name = category.Name,
+                UrlHandle = category.UrlHandle
+            };
+
+            return Ok(response);
+
         }
     }
 }
