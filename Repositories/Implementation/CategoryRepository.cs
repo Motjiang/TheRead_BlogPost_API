@@ -23,6 +23,7 @@ namespace TheRead_BlogPost_API.Repositories.Implementation
             return category;
         }
 
+
         public async Task<IEnumerable<Category>> GetAllAsync()
         {
             //Return all categories from the database
@@ -46,6 +47,20 @@ namespace TheRead_BlogPost_API.Repositories.Implementation
                 return category;
             }
             return null;
+        }
+
+        public async Task<Category?> DeleteAsync(Guid id)
+        {
+            var existingCategory = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
+
+            if(existingCategory is null)
+            {
+                return null;
+            }
+
+            _context.Categories.Remove(existingCategory);
+            await _context.SaveChangesAsync();
+            return existingCategory;
         }
     }
 }
