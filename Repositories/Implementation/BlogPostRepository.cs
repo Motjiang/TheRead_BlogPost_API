@@ -4,7 +4,7 @@ using TheRead_BlogPost_API.Repositories.Interface;
 
 namespace TheRead_BlogPost_API.Repositories.Implementation
 {
-    public class BlogPostRepository : IBlogPostRepositoty
+    public class BlogPostRepository : IBlogPostRepository
     {
         //independecy injection
         private readonly ApplicationDbContext _context;

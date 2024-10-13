@@ -2,7 +2,7 @@
 
 namespace TheRead_BlogPost_API.Repositories.Interface
 {
-    public interface IBlogPostRepositoty
+    public interface IBlogPostRepository
     {
         // Create a blog post
         Task<BlogPost> CreateAsync(BlogPost blogPost);

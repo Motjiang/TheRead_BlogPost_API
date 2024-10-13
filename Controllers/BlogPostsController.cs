@@ -12,9 +12,9 @@ namespace TheRead_BlogPost_API.Controllers
     public class BlogPostsController : ControllerBase
     {
         //DI (Dependency Injection) is used to inject the IBlogPostRepository into the constructor
-        private readonly IBlogPostRepositoty _blogPostRepository;
+        private readonly IBlogPostRepository _blogPostRepository;
 
-        public BlogPostsController(IBlogPostRepositoty blogPostRepository)
+        public BlogPostsController(IBlogPostRepository blogPostRepository)
         {
             _blogPostRepository = blogPostRepository;
         }

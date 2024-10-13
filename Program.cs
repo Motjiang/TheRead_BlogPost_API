@@ -22,7 +22,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 //add the repository to the DI container
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-builder.Services.AddScoped<IBlogPostRepositoty, BlogPostRepository>();
+builder.Services.AddScoped<IBlogPostRepository, BlogPostRepository>();
 
 
 
