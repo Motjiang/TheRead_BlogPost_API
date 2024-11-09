@@ -51,5 +51,18 @@ namespace TheRead_BlogPost_API.Repositories.Implementation
 
 
         }
+
+        public async Task<BlogPost> DeleteAsync(Guid id)
+        {
+            var blogPost = await _context.BlogPosts.FirstOrDefaultAsync(x => x.Id == id);
+            if (blogPost == null)
+            {
+                return null;
+            }
+
+            _context.BlogPosts.Remove(blogPost);
+            await _context.SaveChangesAsync();
+            return blogPost;
+        }
     }
 }
