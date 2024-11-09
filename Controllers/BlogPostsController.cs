@@ -95,7 +95,13 @@ namespace TheRead_BlogPost_API.Controllers
                     UrlHandle = blogPost.UrlHandle,
                     PublishDate = blogPost.PublishDate,
                     Author = blogPost.Author,
-                    IsVisible = blogPost.IsVisible
+                    IsVisible = blogPost.IsVisible,
+                    Categories = blogPost.Categories.Select(c => new CategoryDto
+                    {
+                        Id = c.Id,
+                        Name = c.Name,
+                        UrlHandle = c.UrlHandle
+                    }).ToList()
                 });
             }
 
