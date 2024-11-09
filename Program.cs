@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using TheRead_BlogPost_API.Data;
 using TheRead_BlogPost_API.Repositories.Implementation;
 using TheRead_BlogPost_API.Repositories.Interface;
@@ -49,6 +50,13 @@ app.UseCors(options =>
 });
 
 app.UseAuthorization();
+
+//enable static files
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Images")),
+    RequestPath = "/Images"
+});
 
 app.MapControllers();
 
