@@ -10,5 +10,8 @@ namespace TheRead_BlogPost_API.Models.Domains
         public string Name { get; set; }
         public string UrlHandle { get; set; }
 
+        // Navigation property
+        public ICollection<BlogPost> BlogPosts { get; set; }
+
     }
 }

@@ -11,5 +11,8 @@
         public DateTime PublishDate { get; set; }
         public string Author { get; set; }
         public bool IsVisible { get; set; }
+
+        // Navigation property
+        public ICollection<Category> Categories { get; set; }
     }
 }
