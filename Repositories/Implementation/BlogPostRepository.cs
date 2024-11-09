@@ -26,5 +26,10 @@ namespace TheRead_BlogPost_API.Repositories.Implementation
         {
             return await _context.BlogPosts.Include(c => c.Categories).ToListAsync();
         }
+
+        public async Task<BlogPost> GetByIdAsync(Guid id)
+        {
+            return await _context.BlogPosts.Include(c => c.Categories).FirstOrDefaultAsync(x => x.Id == id);
+        }
     }
 }
