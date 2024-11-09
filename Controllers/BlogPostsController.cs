@@ -139,5 +139,66 @@ namespace TheRead_BlogPost_API.Controllers
 
             return Ok(response);
         }
+
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> UpdateBlogPost([FromRoute] Guid id, UpdateBlogPostRequestDto request)
+        {
+            // Map the DTO to a domain model
+            var blogPost = new BlogPost
+            {
+                Id = id,
+                Title = request.Title,
+                ShortDescription = request.ShortDescription,
+                Content = request.Content,
+                FeaturedImageUrl = request.FeaturedImageUrl,
+                UrlHandle = request.UrlHandle,
+                PublishDate = request.PublishDate,
+                Author = request.Author,
+                IsVisible = request.IsVisible,
+                Categories = new List<Category>()
+            };
+
+            //Get the categories from the request
+            foreach (var categoryId in request.Categories)
+            {
+                var category = await _categoryRepository.GetByIdAsync(categoryId);
+                if (category != null)
+                {
+                    blogPost.Categories.Add(category);
+                }
+            }
+
+            //Update the blog post
+            var updatedBlogPost = await _blogPostRepository.UpdateAsync(blogPost);
+            if (updatedBlogPost == null)
+            {
+                return NotFound();
+            }
+
+            // Domain model to DTO
+            var response = new BlogPostDto
+            {
+                Id = blogPost.Id,
+                Title = blogPost.Title,
+                ShortDescription = blogPost.ShortDescription,
+                Content = blogPost.Content,
+                FeaturedImageUrl = blogPost.FeaturedImageUrl,
+                UrlHandle = blogPost.UrlHandle,
+                PublishDate = blogPost.PublishDate,
+                Author = blogPost.Author,
+                IsVisible = blogPost.IsVisible,
+                Categories = blogPost.Categories.Select(c => new CategoryDto
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    UrlHandle = c.UrlHandle
+                }).ToList()
+            };
+
+            return Ok(response);
+        }
     }
+
+
 }

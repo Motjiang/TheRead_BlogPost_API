@@ -31,5 +31,25 @@ namespace TheRead_BlogPost_API.Repositories.Implementation
         {
             return await _context.BlogPosts.Include(c => c.Categories).FirstOrDefaultAsync(x => x.Id == id);
         }
+
+        public async Task<BlogPost> UpdateAsync(BlogPost blogPost)
+        {
+           var existingBlogPost = await _context.BlogPosts.Include(c => c.Categories).FirstOrDefaultAsync(x => x.Id == blogPost.Id);
+            if(existingBlogPost == null)
+            {
+                return null;
+            }
+
+            //update the blog post
+            _context.Entry(existingBlogPost).CurrentValues.SetValues(blogPost);
+
+            //update the categories
+            existingBlogPost.Categories = blogPost.Categories;
+
+            await _context.SaveChangesAsync();
+            return blogPost;
+
+
+        }
     }
 }
