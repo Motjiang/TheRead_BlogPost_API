@@ -6,5 +6,7 @@ namespace TheRead_BlogPost_API.Repositories.Interface
     {
         // Create a blog post
         Task<BlogPost> CreateAsync(BlogPost blogPost);
+
+        Task<IEnumerable<BlogPost>> GetAllAsync();
     }
 }

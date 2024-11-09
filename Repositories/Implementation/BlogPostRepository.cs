@@ -1,4 +1,5 @@
-﻿using TheRead_BlogPost_API.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using TheRead_BlogPost_API.Data;
 using TheRead_BlogPost_API.Models.Domains;
 using TheRead_BlogPost_API.Repositories.Interface;
 
@@ -19,6 +20,11 @@ namespace TheRead_BlogPost_API.Repositories.Implementation
             await _context.BlogPosts.AddAsync(blogPost);
             await _context.SaveChangesAsync();
             return blogPost;
+        }
+
+        public async Task<IEnumerable<BlogPost>> GetAllAsync()
+        {
+            return await _context.BlogPosts.ToListAsync();
         }
     }
 }
