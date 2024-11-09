@@ -13,10 +13,12 @@ namespace TheRead_BlogPost_API.Controllers
     {
         //DI (Dependency Injection) is used to inject the IBlogPostRepository into the constructor
         private readonly IBlogPostRepository _blogPostRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public BlogPostsController(IBlogPostRepository blogPostRepository)
+        public BlogPostsController(IBlogPostRepository blogPostRepository, ICategoryRepository categoryRepository)
         {
             _blogPostRepository = blogPostRepository;
+            _categoryRepository = categoryRepository;
         }
 
 
@@ -34,8 +36,19 @@ namespace TheRead_BlogPost_API.Controllers
                 UrlHandle = request.UrlHandle,
                 PublishDate = request.PublishDate,
                 Author = request.Author,
-                IsVisible = request.IsVisible
+                IsVisible = request.IsVisible,
+                Categories = new List<Category>()
             };
+
+            //Get the categories from the request
+            foreach (var categoryId in request.Categories)
+            {
+                var category = await _categoryRepository.GetByIdAsync(categoryId);
+                if (category != null)
+                {
+                    blogPost.Categories.Add(category);
+                }
+            }
 
             // Save the blog post
             blogPost = await _blogPostRepository.CreateAsync(blogPost);
@@ -51,7 +64,13 @@ namespace TheRead_BlogPost_API.Controllers
                 UrlHandle = blogPost.UrlHandle,
                 PublishDate = blogPost.PublishDate,
                 Author = blogPost.Author,
-                IsVisible = blogPost.IsVisible
+                IsVisible = blogPost.IsVisible,
+                Categories = blogPost.Categories.Select(c => new CategoryDto
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    UrlHandle = c.UrlHandle
+                }).ToList()
             };
 
             return Ok(response);

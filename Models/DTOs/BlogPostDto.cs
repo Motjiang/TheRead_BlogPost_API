@@ -11,5 +11,8 @@
         public DateTime PublishDate { get; set; }
         public string Author { get; set; }
         public bool IsVisible { get; set; }
+
+        //accepts category ids from the CategoryDto
+        public List<CategoryDto> Categories { get; set; } = new List<CategoryDto>();
     }
 }
