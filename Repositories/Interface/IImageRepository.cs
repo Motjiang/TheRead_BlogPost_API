@@ -5,6 +5,7 @@ namespace TheRead_BlogPost_API.Repositories.Interface
     public interface IImageRepository
     {
         Task<BlogImage> Upload(BlogImage blogImage, IFormFile file);
+        Task<IEnumerable<BlogImage>> GetImages();
 
     }
 }

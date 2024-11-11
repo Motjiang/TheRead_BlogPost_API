@@ -17,6 +17,28 @@ namespace TheRead_BlogPost_API.Controllers
             _imageRepository = imageRepository;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAllImages()
+        {
+            var images = await _imageRepository.GetImages();
+
+            // Domain model to DTO
+            var response = new List<BlogImageDto>();
+            foreach (var image in images)
+            {
+                response.Add(new BlogImageDto
+                {
+                    Id = image.Id,
+                    FileName = image.FileName,
+                    FileExtension = image.FileExtension,
+                    Title = image.Title,
+                    Url = image.Url,
+                    DateCreated = image.DateCreated
+                });
+            }
+
+            return Ok(response);
+        }
 
         [HttpPost]
         public async Task<IActionResult> UploadImage([FromForm]IFormFile file, [FromForm] string fileName, [FromForm] string title)
@@ -49,7 +71,6 @@ namespace TheRead_BlogPost_API.Controllers
             }
             return BadRequest(ModelState);
         }
-
         private void ValidateFileUpload(IFormFile file)
         {
             var allowedExtensions = new string[] { ".jpg", ".jpeg", ".png", ".gif" };
